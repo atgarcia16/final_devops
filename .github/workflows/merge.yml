@@ -1,0 +1,36 @@
+name: Merge
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+      - qa
+    types:
+      - closed
+
+jobs:
+  imprimir-informacion:
+    runs-on: ubuntu-latest
+    environment: main
+    steps:
+      - name: recorro ramas
+        run: |
+          BRANCH=$(echo "${{ github.event.pull_request.base.ref }}" | cut -d/ -f3)
+
+          if [ "$BRANCH" = "dev" ]; then
+            echo "Rama: $BRANCH"
+            echo "Nombre: ${{ vars.ALUMNO }}"
+          elif [ "$BRANCH" = "qa" ]; then
+            echo "Rama: $BRANCH"
+            echo "Email: ${{ vars.EMAIL }}"
+          elif [ "$BRANCH" = "main" ]; then
+            echo "Rama: $BRANCH"
+            echo "Nombre: ${{ vars.ALUMNO }}"
+            echo "Email: ${{ vars.EMAIL }}"
+          else
+            echo "Rama desconocida: $BRANCH_NAME"
+          fi
+
+     
+     
